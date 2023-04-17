@@ -64,10 +64,12 @@ export const Filter = ({ onFilterChange }: FilterProps): JSX.Element => {
     const { name, value } = event.target;
     setFilters(prevFilters => ({
       ...prevFilters,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       [name!]: value as string,
     }));
     onFilterChange({
       ...filters,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       [name!]: value as string,
     });
   };
