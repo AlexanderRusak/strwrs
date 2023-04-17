@@ -75,8 +75,9 @@ export const Filter = ({ onFilterChange }: FilterProps): JSX.Element => {
   return (
     <div className={classes.filterContainer}>
       <FormControl className={classes.formControl}>
-        <InputLabel className={classes.selectLabel}>Gender</InputLabel>
-        <Select className={classes.select} value={filters.gender} onChange={handleFilterChange} name="gender">
+        <InputLabel className={classes.selectLabel} id="gender-select-label" htmlFor="gender-select">Gender</InputLabel>
+        <Select aria-labelledby="gender-select-label"
+          data-testid="gender-select" className={classes.select} value={filters.gender} onChange={handleFilterChange} name="gender">
           <MenuItem value="">All</MenuItem>
           <MenuItem value="male">Male</MenuItem>
           <MenuItem value="female">Female</MenuItem>

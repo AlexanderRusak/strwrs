@@ -59,7 +59,7 @@ export const CharacterPage = (): JSX.Element => {
     setMass(person.mass);
     setHairColor(person.hair_color);
     setSkinColor(person.skin_color);
-  }, [state]);
+  }, [state, person.hair_color, person.mass, person.skin_color, person.height]);
 
   const isPersonUnchanged = useMemo(
     () =>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, /* useState */ } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { fetchPeople } from '../../store/reducers/peopleReducers';
@@ -30,7 +30,7 @@ export const HomePage = (): JSX.Element => {
     people && setCurrentPeople(people)
   }, [people])
 
-  const handleFilterChange = (newFilters: FilterValues): void => {
+  const handleFilterChange = useCallback((newFilters: FilterValues): void => {
     const filteredPeople = people?.results.filter((person) => {
       let includePerson = true;
       if (newFilters.gender) {
@@ -56,16 +56,15 @@ export const HomePage = (): JSX.Element => {
       next: null,
       previous: null,
     });
-  };
+  }, [people?.results]);
 
 
 
   useEffect(() => {
     if (!search) {
       dispatch(fetchPeople(page));
-      setCurrentPeople(people)
     }
-  }, [page, search]);
+  }, [page, search, dispatch]);
 
   useEffect(() => {
     if (search) {
@@ -73,7 +72,7 @@ export const HomePage = (): JSX.Element => {
     } else {
       setPage(1)
     }
-  }, [search]);
+  }, [search, dispatch]);
 
 
   const memoizedPeople = useMemo(() => {
@@ -94,7 +93,7 @@ export const HomePage = (): JSX.Element => {
         </Grid>
       }) : <NotFound />
     }
-  }, [currentPeople, status]);
+  }, [currentPeople, status, people]);
 
 
   const memoizedPagination = useMemo(() => {
@@ -110,7 +109,7 @@ export const HomePage = (): JSX.Element => {
 
   const filterComponent = useMemo(() => {
     return search ? <Filter onFilterChange={handleFilterChange} /> : null
-  }, [search])
+  }, [search, handleFilterChange])
 
 
   if (error) {
